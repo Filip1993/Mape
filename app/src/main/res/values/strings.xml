@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Mape</string>
     <string name="title_activity_maps">Map</string>
+    <string name="zagreb_glavni_grad">Zagreb, glavni grad</string>
 </resources>
