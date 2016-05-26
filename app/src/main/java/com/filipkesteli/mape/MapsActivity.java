@@ -22,10 +22,19 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     //vec umetnuta varijabla tipa GoogleMap
     private GoogleMap mMap;
+
+    //RETROFIT varijable
+    private Callback<Movie> callback;
+    private IMovies iMovies;
 
     //definiramo konstante:
     private static LatLng LAT_LNG_ZAGREB = new LatLng(45.817, 16); //koordinate Zagreba
@@ -43,6 +52,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        //setupRestAdapters(); //postavljamo RETROFITOV REST Adapter
+    }
+
+    private void setupRestAdapters() {
+        //REST Adapter zna da ce se spojiti na www.tralala.com/itd...
+        //Buildamo novi RestAdapter sa endpointom (tamo RestAdapter gleda) definiranim s konstantom u Interfaceu IMovies
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(IMovies.ENDPOINT_URL)
+                .build();
+
+        iMovies = restAdapter.create(IMovies.class);
+        //moramo napraviti CALLBACK:
+        //proparsiran JSON objekt Movie s interneta, sad mozemo napisati sto hocemo:
+        callback = new Callback<Movie>() {
+            @Override
+            public void success(Movie movie, Response response) {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append(movie.getTitle() + "/n");
+                stringBuilder.append(movie.getYear() + "/n");
+                stringBuilder.append(movie.getDirector() + "/n");
+                stringBuilder.append(movie.getActors() + "/n");
+                String text = stringBuilder.toString();
+                Toast.makeText(MapsActivity.this, text, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(MapsActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 
 
