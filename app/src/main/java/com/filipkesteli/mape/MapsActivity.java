@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
 import java.util.List;
@@ -56,6 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //setupRestAdapters(); //postavljamo RETROFITOV REST Adapter
     }
 
+    /*
     private void setupRestAdapters() {
         //REST Adapter zna da ce se spojiti na www.tralala.com/itd...
         //Buildamo novi RestAdapter sa endpointom (tamo RestAdapter gleda) definiranim s konstantom u Interfaceu IMovies
@@ -84,7 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         };
     }
-
+*/
 
     /**
      * Manipulates the map once available.
@@ -117,6 +119,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         */
+
+
+        //pokusaj crtanja linija:
+        // Polylines are useful for marking paths and routes on the map.
+        /*googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                new LatLng(-18.142, 178.431), 2));
+
+        googleMap.addPolyline(new PolylineOptions().geodesic(true)
+                .add(new LatLng(-33.866, 151.195))  // Sydney
+                .add(new LatLng(-18.142, 178.431))  // Fiji
+                .add(new LatLng(21.291, -157.821))  // Hawaii
+                .add(new LatLng(37.423, -122.091))  // Mountain View
+        );*/
     }
 
     private void configureMap() {
